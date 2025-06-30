@@ -1,5 +1,9 @@
 package com.example.LearningSpringBoot.controller;
 
+import com.example.LearningSpringBoot.service.accountsService;
+import com.example.LearningSpringBoot.DTO.accountsDTO;
+
+
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +23,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 @RequestMapping("/accounts")
+
 public class AccountsController {
 	
+	@Autowired
+	private accountsService accountsService;
+
 	@Autowired
     private AccountsRepository accountsRepository;
 	
@@ -67,6 +75,13 @@ public class AccountsController {
 	public List<Accounts> getAccountsByCusId(int cusId) {
 		return accountsRepository.getAccountsByCusId(cusId);
 	}
+	
+	// Get all accounts as DTOs
+	@GetMapping("/getAllAccountsDTO")
+	public List<accountsDTO> getAllAccountsAsDTO() {
+	    return accountsService.getAllAccountsAsDTO();
+	}
+
 	
 	@PostMapping("/addAccount")
 	@Operation(summary = "add a new account")
